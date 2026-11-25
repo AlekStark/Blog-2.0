@@ -19,7 +19,15 @@ public class ArticlesController : ControllerBase
         _context = context;
     }
 
-    // POST: api/Article
+    /// <summary>
+    /// POST: api/Article
+    /// </summary>
+    /// { 
+    ///     "Title": "Первый пост", 
+    ///     "Content": "Текст статьи...", 
+    ///     "AuthorId": {{authorId}} 
+    /// }
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ArticleCreateViewModel model)
     {
@@ -65,7 +73,15 @@ public class ArticlesController : ControllerBase
         return Ok(new { message = "Статья успешно создана", articleId = article.Id });
     }
 
-    // PUT: api/Article/{id}
+    /// <summary>
+    /// PUT: api/Article/{id}
+    /// </summary>
+    /// { 
+    ///     "Id": {{articleId}}, 
+    ///     "Title": "Первый пост — обновлённый заголовок", 
+    ///     "Content": "Обновлённый текст статьи..." 
+    /// }
+    /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Edit(int id, [FromBody] ArticleEditViewModel model)
     {

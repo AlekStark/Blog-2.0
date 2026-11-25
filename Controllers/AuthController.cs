@@ -22,7 +22,15 @@ public class AuthController : ControllerBase
         _configuration = configuration;
     }
 
-    // POST: api/Auth/login
+    /// <summary>
+    /// POST: api/Auth/login
+    /// </summary>
+    /// { 
+    ///     "Username": "admin", 
+    ///     "Password": "12345" 
+    /// }
+    /// <returns></returns>
+
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginViewModel model)
     {

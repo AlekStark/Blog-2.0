@@ -16,7 +16,10 @@ public class TagController : Controller
         _context = context;
     }
 
-    // POST: api/Tags
+    /// POST: api/Tag
+    /// { 
+    ///     "Name": "aspnet" 
+    /// }
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] TagCreateViewModel model)
     {
@@ -42,7 +45,14 @@ public class TagController : Controller
         return Ok(new { message = "Тег успешно создан", tagId = tag.Id });
     }
 
-    // PUT: api/Tag/{id}
+    /// <summary>
+    /// PUT: api/Tag/{id}
+    /// </summary>
+    /// { 
+    ///     "Id": {{tagId}}, 
+    ///     "Name": "aspnet-core" 
+    /// }
+    /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Edit(int id, [FromBody] TagEditViewModel model)
     {
@@ -99,7 +109,7 @@ public class TagController : Controller
         return Ok(new { message = "Тег успешно удалён", tagId = id });
     }
 
-    // GET: api/Tags
+    // GET: api/Tag
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -117,7 +127,7 @@ public class TagController : Controller
         return Ok(tags);
     }
 
-    // GET: api/Tags/{id}
+    // GET: api/Tag/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {

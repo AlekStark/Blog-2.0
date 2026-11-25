@@ -15,7 +15,15 @@ public class CommentController : Controller
     {
         _context = context;
     }
-    // POST: api/Comment
+    /// <summary>
+    /// POST: api/Comment
+    /// </summary>
+    /// { 
+    ///     "Content": "Отличная статья, спасибо!", 
+    ///     "ArticleId": {{articleId}}, 
+    ///     "UserId": {{userId}} 
+    /// }
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CommentCreateViewModel model)
     {
@@ -53,7 +61,18 @@ public class CommentController : Controller
 
         return Ok(new { message = "Комментарий успешно создан", commentId = comment.Id });
     }
-    // PUT: api/Comment/{id}
+
+
+    /// <summary>
+    /// PUT: api/Comment/{id}
+    /// </summary>
+    /// { 
+    ///     "Id": {{commentId}},
+    ///     "Content": "Отличная статья, спасибо!", 
+    ///     "ArticleId": {{articleId}}, 
+    ///     "UserId": {{userId}} 
+    /// }
+    /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<IActionResult> Edit(int id, [FromBody] CommentEditViewModel model)
     {
@@ -116,7 +135,7 @@ public class CommentController : Controller
 
         return Ok(new { message = "Комментарий успешно удалён", commentId = id });
     }
-    // GET: api/Comments
+    // GET: api/Comment
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -139,7 +158,7 @@ public class CommentController : Controller
         return Ok(comments);
     }
 
-    // GET: api/Comments/{id}
+    // GET: api/Comment/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {

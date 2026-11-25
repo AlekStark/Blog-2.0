@@ -18,7 +18,15 @@ public class UsersController : ControllerBase
         _context = context;
     }
 
-    // POST: api/Users/register
+    /// <summary>
+    /// POST: api/Users/register
+    /// </summary>
+    /// { 
+    ///     "Username": "ivan_petrov", 
+    ///     "Email": "ivan@example.com", 
+    ///     "Password": "Qwerty123!" 
+    /// }
+    /// <returns></returns>
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
     {
@@ -61,7 +69,14 @@ public class UsersController : ControllerBase
         return Ok(new { message = "Пользователь успешно создан", userId = user.Id, role = defaultRole?.Name });
     }
 
-    // PUT: api/User/{id}
+    /// PUT: api/Users/{id}
+    /// { 
+    ///     "Id": {{userId}}, 
+    ///     "Username": "ivan_petrov", 
+    ///     "Email": "ivan.petrov@example.com", 
+    ///     "Password": "NewPassword456!", 
+    ///     "Role": "Администратор" 
+    /// }
     [HttpPut("{id}")]
     public async Task<IActionResult> Edit(int id, [FromBody] EditUserViewModel model)
     {
@@ -146,53 +161,53 @@ public class UsersController : ControllerBase
     /// фильтр только для админов.
     /// при авторизации получить токен
     /// Key: Authorization
-    ///Value: Bearer<ваш_токен>
+    /// Value: Bearer<ваш_токен>
     /// </summary>
     /// <returns></returns>
     // GET: api/Users
     [HttpGet]
     [ServiceFilter(typeof(AdminOnlyFilter))] // 
     public async Task<IActionResult> GetAll()
-        {
-            var users = await _context.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .Select(u => new
-                {
-                    u.Id,
-                    u.Username,
-                    u.Email,
-                    u.CreatedAt,
-                    Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
-                })
-                .ToListAsync();
-
-            return Ok(users);
-        }
-
-        // GET: api/Users/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var user = await _context.Users
-                .Include(u => u.UserRoles)
-                .ThenInclude(ur => ur.Role)
-                .Where(u => u.Id == id)
-                .Select(u => new
-                {
-                    u.Id,
-                    u.Username,
-                    u.Email,
-                    u.CreatedAt,
-                    Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
-                })
-                .FirstOrDefaultAsync();
-
-            if (user == null)
+    {
+        var users = await _context.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
+            .Select(u => new
             {
-                return NotFound("Пользователь не найден");
-            }
+                u.Id,
+                u.Username,
+                u.Email,
+                u.CreatedAt,
+                Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
+            })
+            .ToListAsync();
 
-            return Ok(user);
+        return Ok(users);
+    }
+
+    // GET: api/Users/{id}
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        var user = await _context.Users
+            .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
+            .Where(u => u.Id == id)
+            .Select(u => new
+            {
+                u.Id,
+                u.Username,
+                u.Email,
+                u.CreatedAt,
+                Roles = u.UserRoles.Select(ur => ur.Role.Name).ToList()
+            })
+            .FirstOrDefaultAsync();
+
+        if (user == null)
+        {
+            return NotFound("Пользователь не найден");
         }
+
+        return Ok(user);
+    }
 }
