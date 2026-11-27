@@ -10,6 +10,7 @@
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Views\Articles\" />
   </ItemGroup>
 
   <ItemGroup>
